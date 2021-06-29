@@ -256,7 +256,7 @@ class TestMultiprocessing(TestCase):
             self.assertTrue(e.is_set())
             self.assertTrue(data[0].eq(4).all())
             self.assertTrue(data[1].eq(4).all())
-            p.join(1)
+            p.join()
             self.assertFalse(p.is_alive())
 
         def test_receive():
@@ -274,7 +274,7 @@ class TestMultiprocessing(TestCase):
             # collect them properly
             del t1, t2
             e.set()
-            p.join(1)
+            p.join()
             self.assertFalse(p.is_alive())
 
         with leak_checker(self) as lc:
@@ -742,7 +742,7 @@ if __name__ == "__main__":
 
         self.assertEqual(var.data, torch.ones(5, 5, device=device))
         self.assertEqual(var.grad.data, torch.ones(5, 5, device=device) * 4)
-        p.join(1)
+        p.join()
         self.assertFalse(p.is_alive())
 
     # Check sharing a cudaMalloc allocation with different types of storage.
